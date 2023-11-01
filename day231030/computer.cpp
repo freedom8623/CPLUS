@@ -21,7 +21,7 @@ class AbsGraphicsCard{
     virtual void show() = 0;
 };
 
-class  Absmemorybank{
+class  AbsMemoryBank{
     public:
     virtual void storage() = 0;
 };
@@ -38,7 +38,7 @@ class IntelGraphicscard:public AbsGraphicsCard{
     void show(){cout<<"Intel GraphicsCard is showing"<<endl;};
 };
 //memory bank
-class IntelMemoryBank:public Absmemorybank{
+class IntelMemoryBank:public AbsMemoryBank{
     public:
     void  storage(){cout<<"Intel MemoryBank is working"<<endl;};
 };
@@ -57,14 +57,14 @@ class LenovoGraphicsCard :public AbsGraphicsCard{
 };
 
 //Memory bank
-class LenovoMemoryBank :public Absmemorybank{
+class LenovoMemoryBank :public AbsMemoryBank{
     public:
     void storage(){cout<<"Lenovo MemoryBank is working"<<endl;};
 };
 //电脑类
 class Computer{
     public:
-    Computer(string *desc,AbsCpu *Cpu,AbsGraphicsCard *Gcard,Absmemorybank *Abank):m_desc(desc),m_Cpu(Cpu),m_Gcard(Gcard),m_Mbank(Abank){}
+    Computer(string *desc,AbsCpu *Cpu,AbsGraphicsCard *Gcard,AbsMemoryBank *Abank):m_desc(desc),m_Cpu(Cpu),m_Gcard(Gcard),m_Mbank(Abank){}
     ~Computer()
     {
         
@@ -77,42 +77,54 @@ class Computer{
     //制作流程
     void Makeup()
     {
-        cout<<setw(25)<<setfill("*")<<"开始组装"<<*m_desc<<setw(15)<<""<<endl;
+        cout<<setw(25)<<setfill('*')<<"开始组装"<<*m_desc<<setw(15)<<""<<endl;
         m_Cpu->calculate();
         m_Gcard->show();
         m_Mbank->storage();
-         cout<<setw(30)<<setfill("*")<<"组装完成"<<*m_desc<<setw(20)<<""<<endl;
+         cout<<setw(30)<<setfill('*')<<"组装完成"<<*m_desc<<setw(20)<<""<<endl;
     }
 
     private:
     string *m_desc;
     AbsCpu *m_Cpu;
     AbsGraphicsCard *m_Gcard;
-    Absmemorybank *m_Mbank;
+    AbsMemoryBank   *m_Mbank;
 };
 
 void MakeComputer()
 {
     //第一台电脑的零件
-    AbsCpu* IntelCpu = new IntelCpu;
-    AbsGraphicsCard* IntelGraphicscard = new IntelGraphicscard;
-    Absmemorybank* IntelMemoryBank = new IntelMemoryBank;
+    AbsCpu* IntelCpu1 = new IntelCpu;
+    AbsGraphicsCard* IntelGraphicscard1 = new IntelGraphicscard;
+    AbsMemoryBank* IntelMemoryBank1 = new IntelMemoryBank;
 
     //创建第一台电脑
-    string* Computer_name1 = new strint("Intel电脑");
-    Computer* Computer1 = new Computer1(Computer1,IntelCpu,IntelGraphicscard,IntelMemoryBank);
+    string* Computer_name1 = new string("Intel电脑");
+    Computer* Computer1 = new Computer(Computer_name1,IntelCpu1,IntelGraphicscard1,IntelMemoryBank1);
     Computer1->Makeup();
     delete Computer1;
 
     //第一台电脑的零件
-    AbsCpu* IntelCpu = new LenovoCpu;
-    AbsGraphicsCard* LenovoGraphicsCard = new LenovoGraphicsCard;
-    Absmemorybank* LenovoMemoryBank = new LenovoMemoryBank;
+    AbsCpu* LenovoCpu2 = new LenovoCpu;
+    AbsGraphicsCard* LenovoGraphicsCard2 = new LenovoGraphicsCard;
+    AbsMemoryBank* LenovoMemoryBank2 = new LenovoMemoryBank;
 
     //创建第二台电脑
     string* Computer_name2 = new string("Lenovo电脑");
-    Computer* Computer2 = new Computer2(Computer2,LenovoCpu,LenovoGraphicsCard,LenovoMemoryBank);
+    Computer* Computer2 = new Computer(Computer_name2,LenovoCpu2,LenovoGraphicsCard2,LenovoMemoryBank2);
+    Computer2->Makeup();
+    delete Computer2;
 
-
+    //创建第三台电脑
+    string* Computer_name3 = new string("混搭电脑");
+    Computer* Computer3 = new Computer(Computer_name3,new LenovoCpu,new IntelGraphicscard,new IntelMemoryBank);
+    Computer3->Makeup();
+    delete Computer3;
 }
 
+int main()
+{
+    MakeComputer();
+    return 0;
+    
+}
