@@ -68,8 +68,9 @@ class JPEG:public Image{
 
 int main(){
     //在windows操作系统上查看demo.bmp图像文件
-    Image *image1 = new BMP();/*4*/
-    IamageImp *IamageImp1 = new WinImp();/*5*/
+    Image *image1 = new BMP();/*4*/  //一个是转换
+    IamageImp *IamageImp1 = new WinImp();/*5*/  //一个是显示
+    
     image1->setImp(IamageImp1);/*6*/
     image1->parseFile("demo.bmp");
 
